@@ -10,23 +10,8 @@ require 'json'
 
 @sum = 0
 def recurse(obj)
-  if obj.class == Array
-    normalized_obj = obj.select {|a| ![Array, Hash].include?(a.class) }
-    recurse_obj = obj.select {|a| [Array, Hash].include?(a.class) }
-    @sum += normalized_obj.map(&:to_i).inject(:+).to_i
-    recurse_obj.each do |a|
-      recurse(a)
-    end  
-  elsif obj.class == Hash
-    normalized_obj = obj.select {|_,a| ![Array, Hash].include?(a.class) }
-    recurse_obj = obj.select {|_,a| [Array, Hash].include?(a.class) }    
-    unless normalized_obj.keys.include?('red') || normalized_obj.values.include?('red')
-      @sum += normalized_obj.to_a.flatten.map(&:to_i).inject(:+).to_i
-      recurse_obj.each do |k,v|
-        recurse(v)
-      end
-    end  
-  end  
+  obj.class == Array ? obj.each { |a| recurse(a) } : (obj.class == Hash ? !(obj.keys.include?('red') || 
+    obj.values.include?('red') ) && obj.each {|_,v| recurse(v) } : @sum += obj.to_i)
 end
 
 recurse(JSON.parse(A))    
