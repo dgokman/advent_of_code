@@ -1,0 +1,19 @@
+// 1
+
+f[a_, b_, c_, d_] := 4 a - c
+g[a_, b_, c_, d_] := -2 a + 5 b
+h[a_, b_, c_, d_] := -b + 5 c - 2 d
+i[a_, b_, c_, d_] := 2 d
+j[k_] := If[Positive[k], k, 0]
+Max[Map[j[f @@ #]*j[g @@ #]*j[h @@ #]*j[i @@ #] &, 
+  Partition[
+   Flatten[Map[Permutations[#] &, 
+     IntegerPartitions[100, {4}, Range[0, 100]]]], 4]]]
+
+
+// 2 
+z[a_, b_, c_, d_] := 5 a + 8 b + 6 c + d
+Max[Map[If[z @@ # == 500, j[f @@ #]*j[g @@ #]*j[h @@ #]*j[i @@ #], 
+    0] &, Partition[
+   Flatten[Map[Permutations[#] &, 
+     IntegerPartitions[100, {4}, Range[0, 100]]]], 4]]]
