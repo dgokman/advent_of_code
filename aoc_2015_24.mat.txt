@@ -1,0 +1,19 @@
+QE[d_, p_] := (vals = {1, 2, 3, 5, 7, 13, 17, 19, 23, 29, 31, 37, 41, 
+    43, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 
+    113};
+  sum = Total[vals];
+  possibles = 
+   Select[IntegerPartitions[sum/d, p, vals], 
+    CountDistinct[#] == Length[#] &];
+  possibleSubsets = Subsets[possibles, {2}];
+  possibleSets = 
+   Select[possibleSubsets, 
+    Length[Union[#[[1]], #[[2]]]] == 
+      Length[#[[1]]] + Length[#[[2]]] &];
+  Min[Map[Times @@ #[[1]] &, possibleSets]])
+
+// 1
+QE[3, 7]
+
+// 2
+QE[4, 4] 
