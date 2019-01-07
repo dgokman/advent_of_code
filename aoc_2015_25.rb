@@ -19,7 +19,6 @@ i = 0
 j = 0
 n = 1
 while i < arr.length
-  p i
   k = i
   while j <= i
     arr[k][j] = s(n)
